@@ -1,6 +1,10 @@
 import { dotDraw } from './dot'
 import { calculateNewCoord, updateMouseDot } from './mouseDot'
-import dotUpdate1 from './dotUpdate-1'
+
+import dotUpdate1 from './dotUpdate1'
+import dotUpdate2 from './dotUpdate2'
+import dotUpdate3 from './dotUpdate3'
+import dotUpdate4 from './dotUpdate4'
 
 // Initial Setup
 const canvas = document.querySelector('canvas')
@@ -60,9 +64,24 @@ function MouseDot(x, y) {
     this.getColor = (opacity) => `rgba(49, 53, 255, ${opacity})`
 }
 
+const queryStringToDotUpdate = () => {
+    const mode = parseInt(location.search.replace('?', ''), 10)
+
+    switch (mode) {
+        case 2:
+            return dotUpdate2
+        case 3:
+            return dotUpdate3
+        case 4:
+            return dotUpdate4
+        default:
+            return dotUpdate1
+    }
+}
+
 Dot.prototype = {
     draw: dotDraw,
-    update: dotUpdate1,
+    update: queryStringToDotUpdate(),
 }
 
 MouseDot.prototype = {
