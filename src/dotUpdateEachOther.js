@@ -16,13 +16,13 @@ export default function() {
 export function checkOtherDots(movedBy) {
     const dotWidth = this.radius * 2
 
-    const notThisFilter = (dot) => this.x !== dot.x && this.y !== dot.y
-    const notMovedBy = (dot) => movedBy.x === dot.x && movedBy.y === dot.y
+    const isNotThisDot = (dot) => this.x !== dot.x && this.y !== dot.y
+    const isMovedBy = (dot) => movedBy.x === dot.x && movedBy.y === dot.y
 
     const tooCloseDiffs = []
-    const notThisOne = this.dots.filter(notThisFilter)
+    const notThisOne = this.dots.filter(isNotThisDot)
     const tooClose = notThisOne.filter((dot) => {
-        if (movedBy && notMovedBy(dot)) {
+        if (movedBy && isMovedBy(dot)) {
             return false
         }
 
