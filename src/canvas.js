@@ -1,9 +1,9 @@
 import { dotDraw } from './dot'
 import { calculateNewCoord, updateMouseDot } from './mouseDot'
 
-import dotUpdate1 from './dotUpdate1'
-import dotUpdate2 from './dotUpdate2'
-import dotUpdate3 from './dotUpdate3'
+import dotUpdateEachOther from './dotUpdateEachOther'
+import dotUpdateOverlapped from './dotUpdateOverlapped'
+import dotUpdateWeird from './dotUpdateWeird'
 
 // Initial Setup
 const canvas = document.querySelector('canvas')
@@ -68,11 +68,11 @@ const queryStringToDotUpdate = () => {
 
     switch (mode) {
         case 2:
-            return dotUpdate2
+            return dotUpdateWeird
         case 3:
-            return dotUpdate3
+            return dotUpdateOverlapped
         default:
-            return dotUpdate1
+            return dotUpdateEachOther
     }
 }
 
