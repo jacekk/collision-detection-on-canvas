@@ -1,7 +1,7 @@
 export default function() {
-    var xDiff = this.mouseCircle.x - this.x
-    var yDiff = this.mouseCircle.y - this.y
-    var zDiff = Math.sqrt(xDiff * xDiff + yDiff * yDiff)
+    const xDiff = this.mouseCircle.x - this.x
+    const yDiff = this.mouseCircle.y - this.y
+    const zDiff = Math.sqrt(xDiff * xDiff + yDiff * yDiff)
 
     if (zDiff < this.centersDistance) {
         const factor = (this.centersDistance - zDiff) / this.animFactor

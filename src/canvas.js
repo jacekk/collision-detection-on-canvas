@@ -1,7 +1,7 @@
 import { dotDraw } from './dot'
 import { calculateNewCoord, updateMouseDot } from './mouseDot'
 
-import dotUpdateEachOther from './dotUpdateEachOther'
+import dotUpdateEachOther, { checkOtherDots } from './dotUpdateEachOther'
 import dotUpdateOverlapped from './dotUpdateOverlapped'
 import dotUpdateWeird from './dotUpdateWeird'
 
@@ -35,12 +35,15 @@ addEventListener('resize', () => {
 
 // Objects
 function Dot(x, y) {
+    // passed
+    this.x = x
+    this.y = y
+    // globals
     this.ctx = ctx
     this.mouse = mouse
     this.mouseCircle = mouseCircle
-    this.x = x
-    this.y = y
-
+    this.dots = dots
+    // settings
     this.animFactor = 20
     this.lineWidth = 2
     this.crossSize = 4
@@ -50,12 +53,14 @@ function Dot(x, y) {
 }
 
 function MouseDot(x, y) {
+    this.x = x
+    this.y = y
+    // globals
     this.ctx = ctx
     this.mouse = mouse
     this.mouseCircle = mouseCircle
-    this.x = x
-    this.y = y
-
+    this.dots = dots
+    // settings
     this.animFactor = 20
     this.lineWidth = 2
     this.crossSize = 8
@@ -63,7 +68,7 @@ function MouseDot(x, y) {
     this.getColor = (opacity) => `rgba(49, 53, 255, ${opacity})`
 }
 
-const queryStringToDotUpdate = () => {
+const getDotUpdateBaseOnSearchQuery = () => {
     const mode = parseInt(location.search.replace('?', ''), 10)
 
     switch (mode) {
@@ -77,8 +82,9 @@ const queryStringToDotUpdate = () => {
 }
 
 Dot.prototype = {
+    checkOtherDots: checkOtherDots,
     draw: dotDraw,
-    update: queryStringToDotUpdate(),
+    update: getDotUpdateBaseOnSearchQuery(),
 }
 
 MouseDot.prototype = {
