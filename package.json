@@ -1,12 +1,12 @@
 {
-  "name": "canvas-template",
+  "name": "collision-detection-on-canvas",
   "version": "0.1.0",
   "description": "",
   "main": "webpack.config.js",
   "scripts": {
     "start": "webpack"
   },
-  "keywords": [],
+  "keywords": ["canvas", "javascript", "collisions", "dots"],
   "author": "JacekK",
   "license": "MIT",
   "dependencies": {

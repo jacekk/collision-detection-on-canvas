@@ -13,8 +13,10 @@ canvas.width = innerWidth
 canvas.height = innerHeight
 
 // Variables / Constants
-const MOUSE_CIRCLE_RADIUS = 60
 const DOT_CIRCLE_RADIUS = 14
+const DOTS_MARGIN = 60
+const MOUSE_CIRCLE_RADIUS = 50
+
 const mouse = {
     x: innerWidth / 2,
     y: innerHeight / 2,
@@ -44,7 +46,7 @@ function Dot(x, y) {
     this.mouseCircle = mouseCircle
     this.dots = dots
     // settings
-    this.animFactor = 20
+    this.animFactor = 12
     this.lineWidth = 2
     this.crossSize = 4
     this.radius = DOT_CIRCLE_RADIUS
@@ -61,7 +63,7 @@ function MouseDot(x, y) {
     this.mouseCircle = mouseCircle
     this.dots = dots
     // settings
-    this.animFactor = 20
+    this.animFactor = 12
     this.lineWidth = 2
     this.crossSize = 8
     this.radius = MOUSE_CIRCLE_RADIUS
@@ -98,17 +100,16 @@ let dots
 let mouseCircle
 
 function init() {
-    const marg = 80
-    const hAmount = Math.floor(canvas.width / marg - 1)
-    const vAmount = Math.floor(canvas.height / marg - 1)
+    const hAmount = Math.floor(canvas.width / DOTS_MARGIN - 1)
+    const vAmount = Math.floor(canvas.height / DOTS_MARGIN - 1)
 
     mouseCircle = new MouseDot(mouse.x, mouse.y)
     dots = []
 
     for (let i = 0; i < hAmount; i++) {
         for (let j = 0; j < vAmount; j++) {
-            const x = i * marg + marg
-            const y = j * marg + marg
+            const x = i * DOTS_MARGIN + DOTS_MARGIN
+            const y = j * DOTS_MARGIN + DOTS_MARGIN
             dots.push(new Dot(x, y))
         }
     }
