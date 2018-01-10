@@ -10,7 +10,6 @@ const mouse = {
     x: innerWidth / 2,
     y: innerHeight / 2,
 }
-// const colors = ['#2185C5', '#7ECEFD', '#FFF6E5', '#FF7F66']
 
 // Event Listeners
 addEventListener('mousemove', (event) => {
@@ -25,26 +24,17 @@ addEventListener('resize', () => {
     init()
 })
 
-// Utility Functions
-/*
-function randomIntFromRange(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min)
-}
-
-function randomColor(colors) {
-    return colors[Math.floor(Math.random() * colors.length)]
-}
-
-function distance(x1, y1, x2, y2) {
-    const xDist = x2 - x1
-    const yDist = y2 - y1
-
-    return Math.sqrt(Math.pow(xDist, 2) + Math.pow(yDist, 2))
-}
-*/
-
 // Objects
-function MouseCircle() {
+function Dot(x, y) {
+    this.x = x
+    this.y = y
+    this.lineWidth = 2
+    this.radius = 16
+    this.crossSize = 5
+    this.getColor = (opacity) => `rgba(0, 145, 0, ${opacity})`
+}
+
+function MouseDot() {
     this.x = mouse.x
     this.y = mouse.y
     this.lineWidth = 4
@@ -53,29 +43,11 @@ function MouseCircle() {
     this.getColor = (opacity) => `rgba(49, 53, 255, ${opacity})`
 }
 
-MouseCircle.prototype.calculateNewCoord = function(prop) {
-    const mousePoint = mouse[prop]
-
-    if (Math.round(this[prop]) === mousePoint) {
-        return
-    }
-
-    const diff = Math.floor(mousePoint - this[prop]) / 15
-
-    if (Math.abs(diff) > 0.05) {
-        this[prop] += diff
-    } else {
-        this[prop] = mousePoint
-    }
-}
-
-MouseCircle.prototype.update = function() {
-    this.calculateNewCoord('x')
-    this.calculateNewCoord('y')
+Dot.prototype.update = function() {
     this.draw()
 }
 
-MouseCircle.prototype.draw = function() {
+Dot.prototype.draw = function() {
     const xs = this.crossSize
 
     ctx.lineWidth = this.lineWidth
@@ -101,17 +73,49 @@ MouseCircle.prototype.draw = function() {
     ctx.stroke()
 }
 
+MouseDot.prototype = {
+    draw: Dot.prototype.draw,
+}
+
+MouseDot.prototype.update = function() {
+    this.calculateNewCoord('x')
+    this.calculateNewCoord('y')
+    this.draw()
+}
+
+MouseDot.prototype.calculateNewCoord = function(prop) {
+    const mousePoint = mouse[prop]
+
+    if (Math.round(this[prop]) === mousePoint) {
+        return
+    }
+
+    const diff = Math.floor(mousePoint - this[prop]) / 15
+
+    if (Math.abs(diff) > 0.05) {
+        this[prop] += diff
+    } else {
+        this[prop] = mousePoint
+    }
+}
+
 // Implementation
-let circles
+let dots
 let mouseCircle
 
 function init() {
-    mouseCircle = new MouseCircle()
-    circles = []
+    const marg = 80
+    const hAmount = Math.floor(canvas.width / marg - 1)
+    const vAmount = Math.floor(canvas.height / marg - 1)
 
-    for (let i = 0; i < 10; i++) {
-        for (let j = 0; j < 6; j++) {
-            // circles.push();
+    mouseCircle = new MouseDot()
+    dots = []
+
+    for (let i = 0; i < hAmount; i++) {
+        for (let j = 0; j < vAmount; j++) {
+            const x = i * marg + marg
+            const y = j * marg + marg
+            dots.push(new Dot(x, y))
         }
     }
 }
@@ -122,11 +126,9 @@ function animate() {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     mouseCircle.update()
-
-    // ctx.fillText("HTML CANVAS BOILERPLATE", mouse.x, mouse.y);
-    // objects.forEach(object => {
-    //  object.update();
-    // });
+    dots.forEach((dot) => {
+        dot.update()
+    })
 }
 
 init()
