@@ -1,3 +1,7 @@
+import { dotDraw } from './dot'
+import { calculateNewCoord, updateMouseDot } from './mouseDot'
+import dotUpdate1 from './dotUpdate-1'
+
 // Initial Setup
 const canvas = document.querySelector('canvas')
 const ctx = canvas.getContext('2d')
@@ -6,6 +10,8 @@ canvas.width = innerWidth
 canvas.height = innerHeight
 
 // Variables / Constants
+const MOUSE_CIRCLE_RADIUS = 60
+const DOT_CIRCLE_RADIUS = 14
 const mouse = {
     x: innerWidth / 2,
     y: innerHeight / 2,
@@ -26,77 +32,43 @@ addEventListener('resize', () => {
 
 // Objects
 function Dot(x, y) {
+    this.ctx = ctx
+    this.mouse = mouse
+    this.mouseCircle = mouseCircle
     this.x = x
     this.y = y
+
+    this.animFactor = 20
     this.lineWidth = 2
-    this.radius = 16
-    this.crossSize = 5
+    this.crossSize = 4
+    this.radius = DOT_CIRCLE_RADIUS
+    this.centersDistance = Math.abs(DOT_CIRCLE_RADIUS + MOUSE_CIRCLE_RADIUS) + 1
     this.getColor = (opacity) => `rgba(0, 145, 0, ${opacity})`
 }
 
-function MouseDot() {
-    this.x = mouse.x
-    this.y = mouse.y
-    this.lineWidth = 4
-    this.radius = 60
-    this.crossSize = 10
+function MouseDot(x, y) {
+    this.ctx = ctx
+    this.mouse = mouse
+    this.mouseCircle = mouseCircle
+    this.x = x
+    this.y = y
+
+    this.animFactor = 20
+    this.lineWidth = 2
+    this.crossSize = 8
+    this.radius = MOUSE_CIRCLE_RADIUS
     this.getColor = (opacity) => `rgba(49, 53, 255, ${opacity})`
 }
 
-Dot.prototype.update = function() {
-    this.draw()
-}
-
-Dot.prototype.draw = function() {
-    const xs = this.crossSize
-
-    ctx.lineWidth = this.lineWidth
-    ctx.fillStyle = this.getColor('0.15')
-    ctx.strokeStyle = this.getColor('0.1')
-
-    ctx.beginPath()
-    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
-    ctx.fill()
-    ctx.stroke()
-    ctx.closePath()
-
-    ctx.strokeStyle = this.getColor('0.3')
-
-    ctx.beginPath()
-    ctx.moveTo(this.x - xs, this.y)
-    ctx.lineTo(this.x + xs, this.y)
-    ctx.stroke()
-
-    ctx.beginPath()
-    ctx.moveTo(this.x, this.y - xs)
-    ctx.lineTo(this.x, this.y + xs)
-    ctx.stroke()
+Dot.prototype = {
+    draw: dotDraw,
+    update: dotUpdate1,
 }
 
 MouseDot.prototype = {
+    calculateNewCoord: calculateNewCoord,
     draw: Dot.prototype.draw,
-}
-
-MouseDot.prototype.update = function() {
-    this.calculateNewCoord('x')
-    this.calculateNewCoord('y')
-    this.draw()
-}
-
-MouseDot.prototype.calculateNewCoord = function(prop) {
-    const mousePoint = mouse[prop]
-
-    if (Math.round(this[prop]) === mousePoint) {
-        return
-    }
-
-    const diff = Math.floor(mousePoint - this[prop]) / 15
-
-    if (Math.abs(diff) > 0.05) {
-        this[prop] += diff
-    } else {
-        this[prop] = mousePoint
-    }
+    update: updateMouseDot,
 }
 
 // Implementation
@@ -108,7 +80,7 @@ function init() {
     const hAmount = Math.floor(canvas.width / marg - 1)
     const vAmount = Math.floor(canvas.height / marg - 1)
 
-    mouseCircle = new MouseDot()
+    mouseCircle = new MouseDot(mouse.x, mouse.y)
     dots = []
 
     for (let i = 0; i < hAmount; i++) {
