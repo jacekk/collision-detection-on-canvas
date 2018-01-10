@@ -47,7 +47,10 @@ function distance(x1, y1, x2, y2) {
 function MouseCircle() {
     this.x = mouse.x
     this.y = mouse.y
+    this.lineWidth = 4
     this.radius = 60
+    this.crossSize = 10
+    this.getColor = (opacity) => `rgba(49, 53, 255, ${opacity})`
 }
 
 MouseCircle.prototype.calculateNewCoord = function(prop) {
@@ -73,15 +76,29 @@ MouseCircle.prototype.update = function() {
 }
 
 MouseCircle.prototype.draw = function() {
-    ctx.fillStyle = 'rgba(255, 0, 0, 0.15)'
-    ctx.strokeStyle = 'rgba(255, 0, 0, 0.3)'
-    ctx.lineWidth = 4
+    const xs = this.crossSize
+
+    ctx.lineWidth = this.lineWidth
+    ctx.fillStyle = this.getColor('0.15')
+    ctx.strokeStyle = this.getColor('0.1')
 
     ctx.beginPath()
     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
     ctx.fill()
     ctx.stroke()
     ctx.closePath()
+
+    ctx.strokeStyle = this.getColor('0.3')
+
+    ctx.beginPath()
+    ctx.moveTo(this.x - xs, this.y)
+    ctx.lineTo(this.x + xs, this.y)
+    ctx.stroke()
+
+    ctx.beginPath()
+    ctx.moveTo(this.x, this.y - xs)
+    ctx.lineTo(this.x, this.y + xs)
+    ctx.stroke()
 }
 
 // Implementation
