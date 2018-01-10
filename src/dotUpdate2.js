@@ -4,9 +4,8 @@ export default function() {
     var zDiff = Math.sqrt(xDiff * xDiff + yDiff * yDiff)
 
     if (zDiff < this.centersDistance) {
-        const factor = (this.centersDistance - zDiff) / this.animFactor
-        this.x -= Math.sin(xDiff / zDiff) * factor
-        this.y -= Math.sin(yDiff / zDiff) * factor
+        this.x -= Math.sin(xDiff / zDiff * zDiff) * 3
+        this.y -= Math.sin(yDiff / zDiff * zDiff) * 3
     }
 
     this.draw()

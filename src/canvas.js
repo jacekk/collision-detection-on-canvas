@@ -4,7 +4,6 @@ import { calculateNewCoord, updateMouseDot } from './mouseDot'
 import dotUpdate1 from './dotUpdate1'
 import dotUpdate2 from './dotUpdate2'
 import dotUpdate3 from './dotUpdate3'
-import dotUpdate4 from './dotUpdate4'
 
 // Initial Setup
 const canvas = document.querySelector('canvas')
@@ -72,8 +71,6 @@ const queryStringToDotUpdate = () => {
             return dotUpdate2
         case 3:
             return dotUpdate3
-        case 4:
-            return dotUpdate4
         default:
             return dotUpdate1
     }
