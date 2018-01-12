@@ -11,3 +11,13 @@
 - `$ cd collision-detection-on-canvas`
 - `$ yarn install`
 - `$ yarn run start`
+
+### Demo
+
+[Click me](https://jacekk.github.io/collision-detection-on-canvas/)
+
+![screenshot jacekk](https://user-images.githubusercontent.com/1695878/34887476-f6ad52fc-f7c6-11e7-8dc0-cff2ae158ef2.png)
+
+### License
+
+MIT
