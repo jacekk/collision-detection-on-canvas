@@ -71,12 +71,12 @@ function MouseDot(x, y) {
 }
 
 const getDotUpdateBaseOnSearchQuery = () => {
-    const mode = parseInt(location.search.replace('?', ''), 10)
+    const mode = location.search.replace('?', '')
 
     switch (mode) {
-        case 2:
+        case 'weird':
             return dotUpdateWeird
-        case 3:
+        case 'overlapping':
             return dotUpdateOverlapped
         default:
             return dotUpdateEachOther

@@ -14,9 +14,11 @@
 
 ### Demo
 
-[Click me](https://jacekk.github.io/collision-detection-on-canvas/)
+* [With overlapping](https://jacekk.github.io/collision-detection-on-canvas/?overlapping)
+* [Without overlapping](https://jacekk.github.io/collision-detection-on-canvas/?default)
+* [Weird version](https://jacekk.github.io/collision-detection-on-canvas/?weird)
 
-![screenshot jacekk](https://user-images.githubusercontent.com/1695878/34887476-f6ad52fc-f7c6-11e7-8dc0-cff2ae158ef2.png)
+![Collision Detection @ Canvas screenshot](https://user-images.githubusercontent.com/1695878/34887476-f6ad52fc-f7c6-11e7-8dc0-cff2ae158ef2.png)
 
 ### License
 
