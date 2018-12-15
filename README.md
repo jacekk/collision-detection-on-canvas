@@ -1,6 +1,6 @@
 # Collision Detection @ Canvas
 
-### Requirement
+### Requirements
 
 - node 8.x
 - npm 5.x OR yarn 1.*
